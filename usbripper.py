@@ -6,6 +6,7 @@ import pyudev
 import os
 import psutil
 import time
+import urllib
 
 from distutils.dir_util import copy_tree
 from gpiozero import RGBLED
@@ -15,10 +16,22 @@ monitor = pyudev.Monitor.from_netlink(context)
 monitor.filter_by('block')
 toDirectory = "/backups"
 backupDriveUuid = "2d42aa7b-a00b-42c7-8c73-90241155e8ed"
+nfsServer="10.0.0.8"
 # LEDs
 led = RGBLED(red=9, green=10, blue=11)
 # Make all LEDs red while boot up
 led.red = 1
+
+# NFS Server
+response = os.system("ping -c 1 " + nfsServer)
+
+#and then check the response...
+if response == 0:
+    print('{} {}'.format(nfsServer, 'is up!'))
+else:
+    print('{} {}'.format(nfsServer, 'is down!'))
+
+# Device Sniffer
 for device in iter(monitor.poll, None):
     # Device is now ready to poll
     led.color = (0, 1, 0)  # full green
@@ -39,3 +52,4 @@ for device in iter(monitor.poll, None):
                     print('done')
                     led.color = (0, 1, 0)  # full green
         print('----------');
+
