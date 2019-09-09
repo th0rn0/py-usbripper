@@ -18,8 +18,9 @@ monitor = pyudev.Monitor.from_netlink(context)
 monitor.filter_by('block')
 toDirectory = os.getenv("TO_DIRECTORY")
 backupDriveUuid = os.getenv("BACKUP_DRIVE_UUID")
-nfsServer=os.getenv("NFS_SERVER")
-nfsDrive=os.getenv("NFS_DRIVE")
+nfsServer = os.getenv("NFS_SERVER")
+nfsDrive = os.getenv("NFS_DRIVE")
+nfsMnt = os.getenv("NFS_MNT")
 
 # LEDs
 led = RGBLED(red=9, green=10, blue=11)
@@ -33,7 +34,7 @@ pingResponse = os.system("ping -c 1 " + nfsServer)
 #and then check the response...
 if pingResponse == 0:
     print('{} {}'.format(nfsServer, 'is up!'))
-    mntCmd = 'mount {}:{} {}'.format(nfsServer, nfsDrive, '/nfs')
+    mntCmd = 'mount {}:{} {}'.format(nfsServer, nfsDrive, nfsMnt)
     mntResponse = os.system(mntCmd)
     if mntResponse == 0:
         print('{} {}'.format(nfsServer, 'has been mounted!'))
