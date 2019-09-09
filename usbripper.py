@@ -27,17 +27,26 @@ led = RGBLED(red=9, green=10, blue=11)
 led.red = 1
 
 # NFS Server
-response = os.system("ping -c 1 " + nfsServer)
+print('Checking for NFS Server...')
+pingResponse = os.system("ping -c 1 " + nfsServer)
 
 #and then check the response...
-if response == 0:
+if pingResponse == 0:
     print('{} {}'.format(nfsServer, 'is up!'))
-    mntCmd='mount {}:{} {}'.format(nfsServer, nfsDrive, '/nfs')
-    os.system(mntCmd)
+    mntCmd = 'mount {}:{} {}'.format(nfsServer, nfsDrive, '/nfs')
+    mntResponse = os.system(mntCmd)
+    if mntResponse == 0:
+        print('{} {}'.format(nfsServer, 'has been mounted!'))
+        print('Transferring backups to external storage...')
+        copy_tree(toDirectory, '/nfs', verbose=1)
+        print('done')
+    else:
+        print('{} {}'.format('Cannot mount', nfsServer))
 else:
-    print('{} {}'.format(nfsServer, 'is down!'))
+    print('{} {}'.format(nfsServer, 'is not available!'))
 
 # Device Sniffer
+print('Listening for USB Devices...')
 for device in iter(monitor.poll, None):
     # Device is now ready to poll
     led.color = (0, 1, 0)  # full green
