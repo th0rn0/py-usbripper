@@ -10,13 +10,16 @@ import urllib
 
 from distutils.dir_util import copy_tree
 from gpiozero import RGBLED
+from dotenv import load_dotenv
 
+load_dotenv()
 context = pyudev.Context()
 monitor = pyudev.Monitor.from_netlink(context)
 monitor.filter_by('block')
-toDirectory = "/backups"
-backupDriveUuid = "2d42aa7b-a00b-42c7-8c73-90241155e8ed"
-nfsServer="10.0.0.8"
+toDirectory = os.getenv("TO_DIRECTORY")
+backupDriveUuid = os.getenv("BACKUP_DRIVE_UUID")
+nfsServer=os.getenv("NFS_SERVER")
+nfsDrive=os.getenv("NFS_DRIVE")
 
 # LEDs
 led = RGBLED(red=9, green=10, blue=11)
@@ -29,6 +32,7 @@ response = os.system("ping -c 1 " + nfsServer)
 #and then check the response...
 if response == 0:
     print('{} {}'.format(nfsServer, 'is up!'))
+    os.cmd ('mount -t {}:{} {}'.format(nfsServer, nfsDrive, '/nfs'))
 else:
     print('{} {}'.format(nfsServer, 'is down!'))
 
