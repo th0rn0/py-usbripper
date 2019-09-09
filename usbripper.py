@@ -32,7 +32,8 @@ response = os.system("ping -c 1 " + nfsServer)
 #and then check the response...
 if response == 0:
     print('{} {}'.format(nfsServer, 'is up!'))
-    os.cmd ('mount -t {}:{} {}'.format(nfsServer, nfsDrive, '/nfs'))
+    mntCmd='mount {}:{} {}'.format(nfsServer, nfsDrive, '/nfs')
+    os.system(mntCmd)
 else:
     print('{} {}'.format(nfsServer, 'is down!'))
 
