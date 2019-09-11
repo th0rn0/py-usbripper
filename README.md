@@ -2,7 +2,7 @@
 
 **WIP**
 
-Python3 Script to run on a Raspberry pi to rip USB storage devices and SD Cards automatically and save them to a backup directory ready for transfer onto a server (via WiFi - WIP). Currently has GPIOZero for LED usage (pins: red=9, green=10, blue=11).
+Python3 Script to run on a Raspberry pi to rip USB storage devices and SD Cards automatically and save them to a backup directory ready for transfer onto a server. Currently has GPIOZero for LED usage (pins: red=11, green=10).
 
 ## Prerequisites
 
