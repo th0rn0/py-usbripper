@@ -17,3 +17,8 @@ Python3 Script to run on a Raspberry pi to rip USB storage devices and SD Cards 
 ## Usage
 
 Run the script and insert a USB, wait.
+
+### TODO
+
+- Currently only adds things, doesnt check or do validation to see if it exists.
+- Will overwrite if files already exist even if they arent the same.
