@@ -25,7 +25,6 @@ nfsDrive = os.getenv("NFS_DRIVE")
 nfsMnt = os.getenv("NFS_MNT")
 
 # LEDs
-# led = RGBLED(red=9, green=10, blue=11)
 # led.red = 1
 ledRed = LED(17)
 ledGreen = LED(27)
