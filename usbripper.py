@@ -42,7 +42,7 @@ if pingResponse == 0:
         print('{} {}'.format(nfsServer, 'has been mounted!'))
         print('Transferring backups to external storage...')
         ledRed.blink()
-        copy_tree(toDirectory, '/nfs', verbose=1)
+        copy_tree(toDirectory, nfsMnt, verbose=1)
         if os.getenv('CLEANUP') == 'true':
             rmCmd = 'rm -rf {}/*'.format(toDirectory)
             os.system(rmCmd)
