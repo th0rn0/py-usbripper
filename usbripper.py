@@ -27,8 +27,8 @@ nfsMnt = os.getenv("NFS_MNT")
 # LEDs
 # led = RGBLED(red=9, green=10, blue=11)
 # led.red = 1
-ledRed = LED(11)
-ledGreen = LED(10)
+ledRed = LED(17)
+ledGreen = LED(27)
 
 # NFS Server Check
 print('Checking for NFS Server...')
