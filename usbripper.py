@@ -1,4 +1,4 @@
-ssh#!/usr/bin/env python
+#!/usr/bin/env python
 
 print('Starting pyusbreader!')
 
