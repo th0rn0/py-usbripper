@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+ssh#!/usr/bin/env python
 
 print('Starting pyusbreader!')
 
@@ -52,12 +52,12 @@ if pingResponse == 0:
         print('{} {}'.format('Cannot mount', nfsServer))
         ledGreen.blink()
         ledRed.blink()
-        sleep(10)
+        time.sleep(10)
 else:
     print('{} {}'.format(nfsServer, 'is not available!'))
     ledGreen.blink()
     ledRed.blink()
-    sleep(5)
+    time.sleep(5)
 ledRed.off()
 ledGreen.off()
 
