@@ -82,7 +82,7 @@ for device in iter(monitor.poll, None):
                     # led.color = (1, 1, 0)  # full yellow
                     ledGreen.blink()
                     destDir = '{}/{}'.format(tmpDir, dirName)
-                    copy_tree(p.mountpoint, tmpDir, verbose=1)
+                    copy_tree(p.mountpoint, destDir, verbose=1)
                     print('done')
                     # led.color = (0, 1, 0)  # full green
                     ledGreen.on()
