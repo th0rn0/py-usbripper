@@ -7,6 +7,8 @@ import os
 import psutil
 import time
 import urllib
+import random
+import string
 
 from distutils.dir_util import copy_tree
 # from gpiozero import RGBLED
@@ -18,7 +20,7 @@ load_dotenv()
 context = pyudev.Context()
 monitor = pyudev.Monitor.from_netlink(context)
 monitor.filter_by('block')
-toDirectory = os.getenv("TO_DIRECTORY")
+tmpDir = os.getenv("TMP_DIR")
 backupDriveUuid = os.getenv("BACKUP_DRIVE_UUID")
 nfsServer = os.getenv("NFS_SERVER")
 nfsDrive = os.getenv("NFS_DRIVE")
@@ -42,9 +44,9 @@ if pingResponse == 0:
         print('{} {}'.format(nfsServer, 'has been mounted!'))
         print('Transferring backups to external storage...')
         ledRed.blink()
-        copy_tree(toDirectory, '/nfs', verbose=1)
+        copy_tree(tmpDir, nfsMnt, verbose=1)
         if os.getenv('CLEANUP') == 'true':
-            rmCmd = 'rm -rf {}/*'.format(toDirectory)
+            rmCmd = 'rm -rf {}/*'.format(tmpDir)
             os.system(rmCmd)
         print('done')
     else:
@@ -75,10 +77,12 @@ for device in iter(monitor.poll, None):
             if device.get('ID_FS_UUID') != backupDriveUuid:
                 if p.device == device.device_node:
                     # Found a mount point. Begin copy
-                    print('Copying {} to {}'.format(p.mountpoint, toDirectory))
+                    randomString = randomString(10)
+                    print('Copying {} to {}/{}'.format(p.mountpoint, tmpDir, randomString))
                     # led.color = (1, 1, 0)  # full yellow
                     ledGreen.blink()
-                    copy_tree(p.mountpoint, toDirectory, verbose=1)
+                    destDir = '{}/{}'.format(tmpDir, randomString)
+                    copy_tree(p.mountpoint, tmpDir, verbose=1)
                     print('done')
                     # led.color = (0, 1, 0)  # full green
                     ledGreen.on()
