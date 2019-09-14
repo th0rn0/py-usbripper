@@ -12,6 +12,7 @@ from distutils.dir_util import copy_tree
 # from gpiozero import RGBLED
 from gpiozero import LED
 from dotenv import load_dotenv
+from datetime import datetime
 
 # Variables
 load_dotenv()
@@ -23,6 +24,7 @@ backupDriveUuid = os.getenv("BACKUP_DRIVE_UUID")
 nfsServer = os.getenv("NFS_SERVER")
 nfsDrive = os.getenv("NFS_DRIVE")
 nfsMnt = os.getenv("NFS_MNT")
+now = datetime.now()
 
 # LEDs
 # led.red = 1
