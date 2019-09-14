@@ -7,8 +7,6 @@ import os
 import psutil
 import time
 import urllib
-import random
-import string
 
 from distutils.dir_util import copy_tree
 # from gpiozero import RGBLED
@@ -77,11 +75,11 @@ for device in iter(monitor.poll, None):
             if device.get('ID_FS_UUID') != backupDriveUuid:
                 if p.device == device.device_node:
                     # Found a mount point. Begin copy
-                    randomString = randomString(10)
-                    print('Copying {} to {}/{}'.format(p.mountpoint, tmpDir, randomString))
+                    dirName = '{}{}'.format(device.get('ID_FS_UUID'), now.strftime("%d-%m-%Y_%H-%M-%S"))
+                    print('Copying {} to {}/{}'.format(p.mountpoint, tmpDir, dirName))
                     # led.color = (1, 1, 0)  # full yellow
                     ledGreen.blink()
-                    destDir = '{}/{}'.format(tmpDir, randomString)
+                    destDir = '{}/{}'.format(tmpDir, dirName)
                     copy_tree(p.mountpoint, tmpDir, verbose=1)
                     print('done')
                     # led.color = (0, 1, 0)  # full green
